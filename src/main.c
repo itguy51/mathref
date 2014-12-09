@@ -3,17 +3,17 @@
 #include "geometry.h"
 #include "trigonometry.h"
 #include "calc.h"
-#include "biology.h"
-#include "physics.h"
-#include "chemistry.h"
-#include "conversion.h"
-#include "electricity.h"
-	
+//My Stuff.
+#include "trig_deriv.h"
+#include "inverse_trig_deriv.h"
+#include "hyp_trig.h"
+#include "inverse_hyp_trig.h"
+#include "trig_limits.h"
+
 #define NUM_MATH_MENU_ITEMS 4
-#define NUM_MENU_SECTIONS 4
-#define NUM_SCIENCE_MENU_ITEMS 4
-#define NUM_OTHER_MENU_ITEMS 1
-#define NUM_ABOUT_MENU_ITEMS 2
+#define NUM_MENU_SECTIONS 2
+#define NUM_TRIG_CALC_MENU_ITEMS 5
+
 static Window *window;
 
 static SimpleMenuLayer *simple_menu_layer;
@@ -21,10 +21,7 @@ static SimpleMenuLayer *simple_menu_layer;
 static SimpleMenuSection menu_sections[NUM_MENU_SECTIONS];
 
 static SimpleMenuItem math_menu_items[NUM_MATH_MENU_ITEMS];
-static SimpleMenuItem science_menu_items[NUM_SCIENCE_MENU_ITEMS];
-static SimpleMenuItem about_menu_items[NUM_ABOUT_MENU_ITEMS];
-static SimpleMenuItem other_menu_items[NUM_OTHER_MENU_ITEMS];
-
+static SimpleMenuItem trig_calc_menu_items[NUM_TRIG_CALC_MENU_ITEMS];
 //Callbacks
 
 static void algebra_select_callback(int index, void *ctx) {
@@ -39,23 +36,21 @@ static void trig_select_callback(int index, void *ctx) {
 static void calc_select_callback(int index, void *ctx) {
   show_calc_menu();
 }
-static void bio_select_callback(int index, void *ctx) {
-  show_bio_menu();
+static void trig_deriv_select_callback(int index, void *ctx) {
+  show_trig_deriv_menu();
 }
-static void physics_select_callback(int index, void *ctx) {
-  show_physics_menu();
+static void inverse_trig_deriv_select_callback(int index, void *ctx) {
+  show_inverse_trig_deriv_menu();
 }
-static void chemistry_select_callback(int index, void *ctx) {
-  show_chemistry_menu();
+static void hyp_trig_select_callback(int index, void *ctx) {
+  show_hyp_trig_menu();
 }
-static void elec_select_callback(int index, void *ctx) {
-  show_elec_menu();
+static void inverse_hyp_trig_select_callback(int index, void *ctx) {
+  show_inverse_hyp_trig_menu();
 }
-static void conversion_select_callback(int index, void *ctx) {
-  show_conversion_menu();
+static void trig_limits_select_callback(int index, void *ctx) {
+  show_trig_limits_menu();
 }
-
-
 
 static void window_load(Window *window) {
 
@@ -84,59 +79,42 @@ static void window_load(Window *window) {
 	.subtitle = "Calc Formulas",
     .callback = calc_select_callback,
   };
-  science_menu_items[num_a2_items++] = (SimpleMenuItem){
-    .title = "Biology",
-	.subtitle = "Bio Formulas",
-    .callback = bio_select_callback,
+  //TC BEGIN
+  trig_calc_menu_items[num_a2_items++] = (SimpleMenuItem){
+    .title = "Trig",
+	.subtitle = "Normal Trig",
+    .callback = trig_deriv_select_callback,
   };
-  science_menu_items[num_a2_items++] = (SimpleMenuItem){
-    .title = "Physics",
-	.subtitle = "Yay Physics!",
-    .callback = physics_select_callback,
+  trig_calc_menu_items[num_a2_items++] = (SimpleMenuItem){
+    .title = "Inverse Trig",
+  .subtitle = "Inverse Trig",
+    .callback = inverse_trig_deriv_select_callback,
   };
-  science_menu_items[num_a2_items++] = (SimpleMenuItem){
-    .title = "Chemistry",
-	.subtitle = "Chemistry Formulas",
-    .callback = chemistry_select_callback,
+  trig_calc_menu_items[num_a2_items++] = (SimpleMenuItem){
+    .title = "Hyp. Trig",
+  .subtitle = "Hyperbolic Trig",
+    .callback = hyp_trig_select_callback,
   };
-  science_menu_items[num_a2_items++] = (SimpleMenuItem){
-    .title = "Electricity",
-	.subtitle = "Electrical Formulas",
-    .callback = elec_select_callback,
+  trig_calc_menu_items[num_a2_items++] = (SimpleMenuItem){
+    .title = "Inv. Hyp. Trig",
+  .subtitle = "Inverse Hyp. Trig",
+    .callback = inverse_hyp_trig_select_callback,
   };
-  other_menu_items[num_a4_items++] = (SimpleMenuItem){
-    .title = "Conversions",
-	.subtitle = "Unit Conversion",
-    .callback = conversion_select_callback,
+  trig_calc_menu_items[num_a2_items++] = (SimpleMenuItem){
+    .title = "Trig Limits",
+  .subtitle = "Limits!",
+    .callback = trig_limits_select_callback,
   };
-  about_menu_items[num_a3_items++] = (SimpleMenuItem){
-    .title = "Version",
-	.subtitle = "1.1.8 Stable",
-  };
-  about_menu_items[num_a3_items++] = (SimpleMenuItem){
-    .title = "Contact Me",
-	.subtitle = "blackpaw1996@gmail.com",
-  };
+  //TC END
   menu_sections[0] = (SimpleMenuSection){
   .title ="Math Formulas",
   .num_items = NUM_MATH_MENU_ITEMS,
   .items = math_menu_items,
   };
   menu_sections[1] = (SimpleMenuSection){
-  .title ="Science Formulas",
-  .num_items = NUM_SCIENCE_MENU_ITEMS,
-  .items = science_menu_items,
-  };
-  menu_sections[2] = (SimpleMenuSection){
-  .title ="Other",
-  .num_items = NUM_OTHER_MENU_ITEMS,
-  .items = other_menu_items,
-  };
-
-  menu_sections[3] = (SimpleMenuSection){
-  .title ="About",
-  .num_items = NUM_ABOUT_MENU_ITEMS,
-  .items = about_menu_items,
+  .title ="Trig Calc Formulas",
+  .num_items = NUM_TRIG_CALC_MENU_ITEMS,
+  .items = trig_calc_menu_items,
   };
 	
   Layer *window_layer = window_get_root_layer(window);
